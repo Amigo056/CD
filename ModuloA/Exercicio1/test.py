@@ -1,4 +1,4 @@
 def test(result, expected):
-    print('Test:')
-    print('Expected output: '+ expected)
-    print('Actual output: '+ result)
+    print("Test:")
+    print(f"Expected output: {expected}")
+    print(f"Actual output: {result}")
