@@ -1,5 +1,5 @@
 def test(result, expected):
-    print("Test------------------------")
+    print("\n--------------TEST--------------")
     print(f"Expected output: {expected}")
     print(f"Actual output: {result}")
     if(result == expected): 
