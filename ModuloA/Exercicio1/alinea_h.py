@@ -1,10 +1,8 @@
-#(h) Realiza a inversão de ordem do conteúdo de um ficheiro, recebendo como parâmetros os nomes do ficheiro de entrada
-#e de saída. Por exemplo, se o ficheiro de entrada for ABCD1234, o ficheiro de saída será 4321DCBA. A função deverá
-#apresentar o símbolo mais frequente de cada ficheiro e a respetiva entropia
-
-import math
+# (h) Realiza a inversão de ordem do conteúdo de um ficheiro, recebendo como parâmetros os nomes do ficheiro de entrada
+# e de saída. Por exemplo, se o ficheiro de entrada for ABCD1234, o ficheiro de saída será 4321DCBA. A função deverá
+# apresentar o símbolo mais frequente de cada ficheiro e a respetiva entropia
 import os
-
+from Utils import utils
 def inverter_ficheiro(inputFile, outputFile):
     with open (inputFile, 'r') as f:
         conteudo = f.read()    
@@ -13,31 +11,6 @@ def inverter_ficheiro(inputFile, outputFile):
 
     with open (outputFile, 'w') as f:
         f.write(conteudo_invertido)
-
-    
-def simbolo_mais_frequente(conteudo):
-    frequencia = {}
-    for simbolo in conteudo:
-        if simbolo in frequencia:
-            frequencia[simbolo] += 1
-        else:
-            frequencia[simbolo] = 1
-    
-    simbolo_mais_frequente = max(frequencia, key=frequencia.get)
-    return simbolo_mais_frequente, frequencia[simbolo_mais_frequente]
-
-def entropia(conteudo):
-    frequencia = {}
-    for simbolo in conteudo:
-        frequencia[simbolo] = frequencia.get(simbolo, 0) + 1
-
-    total_simbolos = len(conteudo)
-    entropia = 0
-    
-    for freq in frequencia.values():
-        probabilidade = freq / total_simbolos
-        entropia -= probabilidade * math.log2(probabilidade)
-    return entropia
 
 def prepare_test_files():
     dir_atual = os.path.dirname(os.path.abspath(__file__))
@@ -75,8 +48,8 @@ def main():
     for read_file in [input1, output1, input2, output2, input3, output3]:
         with open(read_file, 'r') as f:
             conteudo = f.read()
-        simbolo, freq = simbolo_mais_frequente(conteudo)
-        entropia_valor = entropia(conteudo)
+        simbolo, freq = utils.simbolo_mais_frequente(conteudo)
+        entropia_valor = utils.entropia(conteudo)
         print('------------------------')
         print(f'Ficheiro: {os.path.basename(read_file)}')
         print(f'Símbolo mais frequente: {simbolo} (frequência: {freq})')

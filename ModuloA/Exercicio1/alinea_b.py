@@ -6,6 +6,10 @@ def lcm(a, b):
     result = math.lcm(a,b)
     return result
 
-test(lcm(12, 18), 36)
-test(lcm(20, 30), 60)
-test(lcm(6, 30), 30)
+def main():
+    test(lcm(12, 18), 36)
+    test(lcm(20, 30), 60)
+    test(lcm(6, 30), 30)
+
+if __name__ == '__main__':
+    main()
