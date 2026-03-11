@@ -1,12 +1,15 @@
-
-vetor_a = [1, 2, 3, 4, 5]
-vetor_b = [4, 5, 6, 7, 8]
+from test import test
 
 def vectorUnion(v1, v2):
     result = list(set(v1) | set(v2))
-
-    print(f"The vector with no repetitions is: {result}")
     
     return result
 
-vectorUnion(vetor_a, vetor_b)
+vector_a = [1, 2, 3, 4, 5]
+vector_b = [4, 5, 6, 7, 8]
+vector_c = [1, 1, 2, 2, 3]
+
+test(vectorUnion(vector_a, vector_b), [1, 2, 3, 4, 5, 6, 7, 8])
+test(vectorUnion(vector_a, vector_c), vector_a)
+test(vectorUnion(vector_a, vector_a), vector_a)
+

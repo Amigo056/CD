@@ -1,12 +1,17 @@
 import statistics
+from test import test
 
-v = [2, 5, 1, 12, 25, 12, 2, 99, 67]
+def data(v):
+    minimum = min(v)
+    maximum = max(v)
+    mean = statistics.mean(v)
+    mode = statistics.mode(v)
+    return [minimum, maximum, mean, mode]
 
-def data(vector):
-    minimum = min(vector)
-    maximum = max(vector)
-    mean = statistics.mean(vector)
-    mode = statistics.mode(vector)
-    print(f"In this vector\nThe minimum is {minimum}\nThe maximum is {maximum}\nThe mean is {mean}\nThe mode is {mode}")
+v1 = [2, 5, 1, 12, 25, 12, 2, 99, 67]
+v2 = [1, 1, 1, 1, 1, 1, 1]
+v3 = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-data(v)
+test(data(v1), [1, 99, 25, 2])
+test(data(v2), [1, 1, 1, 1])
+test(data(v3), [1, 9, 5, 1])
