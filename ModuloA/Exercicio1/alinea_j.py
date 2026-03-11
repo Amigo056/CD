@@ -28,7 +28,7 @@ def prepare_test_files():
     dir_atual = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(dir_atual, 'Data')
     with open(os.path.join(data_dir, 'input_j1.txt'), 'w') as f:
-        f.write('ABCD1234surhhfuiweifowej')
+        f.write('aaaabbcd')
     with open(os.path.join(data_dir, 'input_j2.txt'), 'w') as f:
         f.write('EFGH5678diueioewjxpkxqp')
     with open(os.path.join(data_dir, 'input_j3.txt'), 'w') as f:
@@ -38,9 +38,7 @@ def files_path():
     dir_atual = os.path.dirname(os.path.abspath(__file__))
     
     input1 = os.path.join(dir_atual, 'Data', 'input_j1.txt')
-
     input2 = os.path.join(dir_atual, 'Data', 'input_j2.txt')
-    
     input3 = os.path.join(dir_atual, 'Data', 'input_j3.txt')
     
     return input1, input2, input3
@@ -55,6 +53,8 @@ def main():
             conteudo = f.read()
     
         frequencias = calcular_frequencias(conteudo)
+        print('------------------------')
+        print(f'Entropia de {os.path.basename(input_file)}: {entropia(conteudo):.4f}\n')
         desenhar_histograma_matplotlib(frequencias, titulo=f"Histograma de Símbolos - {os.path.basename(input_file)}")
 
 if __name__ == "__main__":
