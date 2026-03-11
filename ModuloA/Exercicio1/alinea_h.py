@@ -40,9 +40,6 @@ def entropia(conteudo):
     return entropia
 
 def prepare_test_files():
-    '''
-    Cria os ficheiros de teste necessários para a função inverter_ficheiro.
-    '''
     dir_atual = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(dir_atual, 'Data')
     with open(os.path.join(data_dir, 'input1.txt'), 'w') as f:
