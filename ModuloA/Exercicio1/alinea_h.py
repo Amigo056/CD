@@ -16,11 +16,11 @@ def prepare_test_files():
     dir_atual = os.path.dirname(os.path.abspath(__file__))
     data_dir = os.path.join(dir_atual, 'Data')
     with open(os.path.join(data_dir, 'input1.txt'), 'w') as f:
-        f.write('ABCD1234')
+        f.write('aaaabbcd')
     with open(os.path.join(data_dir, 'input2.txt'), 'w') as f:
-        f.write('EFGH5678')
+        f.write('awqsedrftgyhujikolpçzxcvbnmeeeeeeeeeeeeeeeoooooooaaaaaaaaaaaaaaaaaaaauusssssfffffiqiqunxz')
     with open(os.path.join(data_dir, 'input3.txt'), 'w') as f:
-        f.write('IJKL9012')
+        f.write('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaao')
 
 def files_path():
     dir_atual = os.path.dirname(os.path.abspath(__file__))
