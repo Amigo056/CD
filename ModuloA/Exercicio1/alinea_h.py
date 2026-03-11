@@ -3,7 +3,6 @@
 #apresentar o símbolo mais frequente de cada ficheiro e a respetiva entropia
 
 import math
-from test import test
 import os
 
 def inverter_ficheiro(inputFile, outputFile):
@@ -31,16 +30,13 @@ def entropia(conteudo):
     frequencia = {}
     for simbolo in conteudo:
         frequencia[simbolo] = frequencia.get(simbolo, 0) + 1
-    print(f'Frequência do símbolo mais frequente: {frequencia}')
 
     total_simbolos = len(conteudo)
-    print(f'Total de símbolos: {total_simbolos}')
     entropia = 0
     
     for freq in frequencia.values():
         probabilidade = freq / total_simbolos
         entropia -= probabilidade * math.log2(probabilidade)
-    print(f'Entropia calculada: {entropia}')
     return entropia
 
 def prepare_test_files():
@@ -61,13 +57,17 @@ def files_path():
     
     input1 = os.path.join(dir_atual, 'Data', 'input1.txt')
     output1 = os.path.join(dir_atual, 'Data', 'output1.txt')
+
     input2 = os.path.join(dir_atual, 'Data', 'input2.txt')
     output2 = os.path.join(dir_atual, 'Data', 'output2.txt')
+    
     input3 = os.path.join(dir_atual, 'Data', 'input3.txt')
     output3 = os.path.join(dir_atual, 'Data', 'output3.txt')
+    
     return input1, output1, input2, output2, input3, output3
 
 def main():
+    prepare_test_files()
 
     input1, output1, input2, output2, input3, output3 = files_path()
    
@@ -75,13 +75,15 @@ def main():
     inverter_ficheiro(input2, output2)
     inverter_ficheiro(input3, output3)
 
-    for input_file, output_file in [(input1, output1), (input2, output2), (input3, output3)]:
-        with open(input_file, 'r') as f:
+    for read_file in [input1, output1, input2, output2, input3, output3]:
+        with open(read_file, 'r') as f:
             conteudo = f.read()
         simbolo, freq = simbolo_mais_frequente(conteudo)
         entropia_valor = entropia(conteudo)
+        print('------------------------')
+        print(f'Ficheiro: {os.path.basename(read_file)}')
         print(f'Símbolo mais frequente: {simbolo} (frequência: {freq})')
-        print(f'Entropia: {entropia_valor:.4f}')
+        print(f'Entropia: {entropia_valor:.4f}\n')
 
 if __name__ == "__main__":
     main()
