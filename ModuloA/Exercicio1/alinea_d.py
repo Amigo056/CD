@@ -13,6 +13,8 @@ def calcular_raizes(a, b, c):
         raiz2 = (-b - delta**0.5) / (2*a)
         return f'A equação tem duas raízes reais: {raiz1:.2f} e {raiz2:.2f}.'
     
+    
+    
 def main():
     test(calcular_raizes(1, -3, 2), 'A equação tem duas raízes reais: 2.00 e 1.00.')
     test(calcular_raizes(1, -2, 1), 'A equação tem uma raiz real: 1.00.')
