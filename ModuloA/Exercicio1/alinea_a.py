@@ -1,4 +1,4 @@
-#(a) Determina e imprime na consola todos os números múltiplos de seis, contidos no intervalo definido por a e a2, inclusivamente
+# (a) Determina e imprime na consola todos os números múltiplos de seis, contidos no intervalo definido por a e a^2, inclusivamente
 from test import test
 
 def multiplos_de_seis(a):

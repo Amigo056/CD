@@ -1,3 +1,4 @@
+# (e) Cálculo e listagem na consola dos valores mínimo, máximo, médio e a moda, de um vetor v de valores reais, passado como parâmetro.
 import statistics
 from test import test
 

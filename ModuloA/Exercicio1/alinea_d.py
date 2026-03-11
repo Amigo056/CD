@@ -1,5 +1,4 @@
 # (d) Cálculo e apresentação das raízes de uma equação de segundo grau ax2 + bx + c = 0, com coeficientes a, b e c passados como parâmetro.
-import math
 from test import test
 
 def calcular_raizes(a, b, c):
@@ -20,6 +19,6 @@ def main():
     test(calcular_raizes(1, -3, 2), 'A equação tem duas raízes reais: 2.00 e 1.00.')
     test(calcular_raizes(1, -2, 1), 'A equação tem uma raiz real: 1.00.')
     test(calcular_raizes(1, 0, 1), 'A equação não tem raízes reais.')
-    
+
 if __name__ == "__main__":
-    main()    
+    main()

@@ -1,3 +1,4 @@
+# (g) Determina e imprime os elementos sem repetições (reunião) entre dois vetores v1 e v2 de inteiros, passados como parâmetro.
 from test import test
 
 def vectorUnion(v1, v2):
