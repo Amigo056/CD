@@ -12,6 +12,7 @@ def elementos_intersetados(v1, v2):
 def main():
     test(elementos_intersetados([1, 2, 3, 4, 5, 6], [4, 5, 6, 7, 8]), '4, 5, 6')
     test(elementos_intersetados([1, 2, 3], [4, 5, 6]), '')
+    test(elementos_intersetados([10, 20, 30], [20, 30, 40]), '20, 30')
 
 if __name__ == "__main__":
     main()
