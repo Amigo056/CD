@@ -1,5 +1,5 @@
 # (i) Recebe o nome de um ficheiro como entrada e determina o símbolo mais frequente e a entropia do ficheiro (ver slides 6).
-from alinea_h import prepare_test_files, files_path
+
 from Utils import utils
 
 def analisa_ficheiro(file):
@@ -17,8 +17,8 @@ def analisa_ficheiro(file):
     return simbolo_mais_freq ,freq ,entropia_valor
 
 def main():
-    prepare_test_files()
-    input1, _, input2, _, input3, _ = files_path()
+    utils.prepare_test_files()
+    input1, _, input2, _, input3, _ = utils.files_path()
     analisa_ficheiro(input1)
     analisa_ficheiro(input2)
     analisa_ficheiro(input3) 

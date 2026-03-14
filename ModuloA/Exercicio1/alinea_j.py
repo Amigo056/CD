@@ -1,6 +1,5 @@
 # (j) Recebe o nome de um ficheiro de entrada e apresenta o histograma dos símbolos do ficheiro e a respetiva entropia.
 from Utils import utils
-from alinea_h import prepare_test_files, files_path
 import matplotlib.pyplot as plt
 import os
 
@@ -25,9 +24,9 @@ def desenhar_histograma_matplotlib(frequencias, titulo="Histograma de Símbolos"
     counter += 1
 
 def main():
-    prepare_test_files()
+    utils.prepare_test_files()
 
-    input1, _, input2, _, input3, _ = files_path()
+    input1, _, input2, _, input3, _ = utils.files_path()
 
     for input_file in [input1, input2, input3]:
         with open(input_file, 'r') as f:
