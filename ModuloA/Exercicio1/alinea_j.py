@@ -19,7 +19,9 @@ def desenhar_histograma_matplotlib(frequencias, titulo="Histograma de Símbolos"
     plt.title(titulo)
     plt.xticks(rotation=45)
     plt.tight_layout()
-    plt.savefig(f'histograma{counter}.png', dpi=150)
+    caminho_completo = os.path.join("Exercicio1", f"histograma{counter}.png")
+
+    plt.savefig(caminho_completo, dpi=150)
     plt.show()
     counter += 1
 
