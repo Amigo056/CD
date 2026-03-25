@@ -1,5 +1,6 @@
 import math
 from collections import Counter
+import os
 
 def simbolo_mais_frequente(conteudo):
     frequencia = {}
@@ -39,3 +40,32 @@ def prob_max(freq_max, total):
 
 def info_propria(prob):
     return -math.log2(prob)
+
+def filesToTest():
+    dir_atual = os.path.dirname(os.path.abspath(__file__))
+    data_dir = os.path.join(dir_atual, 'data')
+    return [os.path.join(data_dir, f) for f in os.listdir(data_dir) if os.path.isfile(os.path.join(data_dir, f))]
+
+def ler_ficheiro(file_path):
+    """
+    Lê ficheiro de forma adequada ao tipo (texto ou binário).
+    Retorna: (conteudo, modo)
+    """
+    extensao = os.path.splitext(file_path)[1].lower()
+    
+    # Extensões de ficheiros binários comuns
+    binarios = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.ico', '.pdf', 
+                '.zip', '.rar', '.exe', '.dll', '.bin', '.dat', '.mp3', 
+                '.mp4', '.avi', '.mov', '.wav', '.tif', '.ttf', '.woff'}
+    
+    if extensao in binarios:
+        # Ler como binário - cada byte é um símbolo (0-255)
+        with open(file_path, 'rb') as f:
+            bytes_data = f.read()
+            # Converter bytes para lista de inteiros (0-255)
+            conteudo = list(bytes_data)
+            return conteudo, 'binario'
+    else:
+        # Ler como texto
+        with open(file_path, 'r') as f:
+            return f.read(), 'texto'
