@@ -26,6 +26,10 @@ def entropia(conteudo):
         entropia -= probabilidade * math.log2(probabilidade)
     return entropia
 
+def file_entropia(file_path):
+    conteudo, _ = ler_ficheiro(file_path)
+    return entropia(conteudo)
+
 def max_entropia(frequencias):
     return math.log2(len(frequencias))
 

@@ -51,7 +51,6 @@ def draw_histogram_matplotlib(frequencias, titulo):
     plt.savefig(caminho_completo, dpi=150)
     plt.show()
 
-
 def file_scanner(file):
     
     conteudo, modo = utils.ler_ficheiro(file)
