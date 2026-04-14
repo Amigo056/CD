@@ -1,0 +1,103 @@
+Administrador de sistemas
+Advogado
+Agricultor
+Analista de dados
+Analista de investimentos
+Animador turístico
+Assistente dentário
+Assistente social
+Ator
+Auditor
+Auxiliar de ação direta
+Babysitter
+Barman
+Biólogo
+Bombeiro
+Cabeleireiro
+Canalizador
+Carpinteiro
+Cientista de dados
+Comercial / vendedor
+Consultor financeiro
+Contabilista
+Cozinheiro / chef
+Cuidador de idosos
+Dentista
+Designer gráfico
+DevOps engineer
+Diretor de hotel
+Economista
+Educador de infância
+Educador social
+Eletricista
+Empregado de mesa
+Empreendedor
+Enfermeiro
+Engenheiro agrónomo
+Engenheiro civil
+Engenheiro eletrotécnico
+Engenheiro industrial
+Engenheiro informático
+Engenheiro mecânico
+Engenheiro químico
+Escritor
+Especialista em cibersegurança
+Especialista em inteligência artificial
+Especialista em marketing digital
+Estafeta
+Esteticista
+Explicador / tutor
+Farmacêutico
+Fisioterapeuta
+Formador profissional
+Fotógrafo
+Freelancer
+Funcionário público
+Gestor
+Gestor de e-commerce
+Gestor de marketing
+Gestor de produto
+Gestor de projetos IT
+Gestor de transportes
+Guia turístico
+Guarda prisional
+Influenciador digital
+Investigador
+Jornalista
+Juiz
+Maquinista
+Médico
+Militar
+Motorista
+Músico
+Notário
+Nutricionista
+Operador de máquinas
+Operador logístico
+Pedreiro
+Pescador
+Personal trainer
+Piloto
+Pintor
+Polícia
+Procurador
+Professor
+Programador / Desenvolvedor de software
+Psicólogo
+Rececionista de hotel
+Relações públicas
+Segurança privado
+Serralheiro
+Solicitador
+Soldador
+Técnico administrativo
+Técnico ambiental
+Técnico de análises clínicas
+Técnico de manutenção
+Técnico de radiologia
+Técnico de recursos humanos
+Tradutor
+Veterinário
+Videógrafo
+Web designer
+
