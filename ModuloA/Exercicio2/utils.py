@@ -70,6 +70,11 @@ def ler_ficheiro(file_path):
             conteudo = list(bytes_data)
             return conteudo, 'binario'
     else:
-        # Ler como texto
-        with open(file_path, 'r') as f:
-            return f.read(), 'texto'
+        # Ler como texto com encoding UTF-8
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return f.read(), 'texto'
+        except UnicodeDecodeError:
+            # Se falhar UTF-8, tenta latin-1 (funciona para qualquer byte)
+            with open(file_path, 'r', encoding='latin-1') as f:
+                return f.read(), 'texto'
