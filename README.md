@@ -8,3 +8,6 @@
 ## Modulo A
 ### Parte 2
 * **Documentation:** [`README.md`](./ModuloA/Exercicio2/README.md)
+
+### Parte 3
+* **Documentation:** [`README.md`](./ModuloA/Exercicio3/README.md)
