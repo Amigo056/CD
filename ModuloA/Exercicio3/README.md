@@ -147,7 +147,7 @@ Para aplicações práticas, recomenda-se o uso de qualidades entre **75 e 90**,
 
 ## Anexos
 
-- Script de processamento: [`Parte 3 - ex1`](./ModuloA/Exercicio3/ex1.py)
-- Gráficos individuais: [`Gráfico Bird`](./ModuloA/Exercicio3/resultados_jpeg_ex1/grafico_bird.png), [`Gráfico Bubbles`](./ModuloA/Exercicio3/resultados_jpeg_ex1/grafico_bubbles.png)
-- Gráfico comparativo global: [`grafico_comparativo_global.png`](./ModuloA/Exercicio3/resultados_jpeg_ex1/grafico_comparativo_global.png)
-- Mosaicos visuais: [`visual_bird.png`](./ModuloA/Exercicio3/resultados_jpeg_ex1/visual_bird.png), [`visual_bubbles.png`](./ModuloA/Exercicio3/resultados_jpeg_ex1/visual_bubbles.png)
+- Script de processamento: [`Parte 3 - ex1`](./ex1.py)
+- Gráficos individuais: [`Gráfico Bird`](./resultados_jpeg_ex1/grafico_bird.png), [`Gráfico Bubbles`](./resultados_jpeg_ex1/grafico_bubbles.png)
+- Gráfico comparativo global: [`grafico_comparativo_global.png`](./resultados_jpeg_ex1/grafico_comparativo_global.png)
+- Mosaicos visuais: [`visual_bird.png`](./resultados_jpeg_ex1/visual_bird.png), [`visual_bubbles.png`](./resultados_jpeg_ex1/visual_bubbles.png)
