@@ -1,6 +1,8 @@
 import math
 from collections import Counter
 import os
+import matplotlib.pyplot as plt
+from PIL import Image
 
 def simbolo_mais_frequente(conteudo):
     frequencia = {}
@@ -26,9 +28,6 @@ def entropia(conteudo):
         entropia -= probabilidade * math.log2(probabilidade)
     return entropia
 
-def file_entropia(file_path):
-    conteudo, _ = ler_ficheiro(file_path)
-    return entropia(conteudo)
 
 def max_entropia(frequencias):
     return math.log2(len(frequencias))
@@ -45,36 +44,83 @@ def prob_max(freq_max, total):
 def info_propria(prob):
     return -math.log2(prob)
 
-def filesToTest():
+def filesToTest(path):
     dir_atual = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(dir_atual, 'data')
+    data_dir = os.path.join(dir_atual, path)
     return [os.path.join(data_dir, f) for f in os.listdir(data_dir) if os.path.isfile(os.path.join(data_dir, f))]
 
-def ler_ficheiro(file_path):
-    """
-    Lê ficheiro de forma adequada ao tipo (texto ou binário).
-    Retorna: (conteudo, modo)
-    """
-    extensao = os.path.splitext(file_path)[1].lower()
+
+def ler_pixels_imagem(file_path, modo="L"):
+    img = Image.open(file_path).convert(modo)
+    conteudo = list(img.getdata())
+    return conteudo, img
+
+
+def histograma_pixels(file_path, modo="L"):
+    conteudo, _ = ler_pixels_imagem(file_path, modo)
+    return calcular_frequencias(conteudo)
+
+
+def image_entropia(file_path, modo="L"):
+    conteudo, _ = ler_pixels_imagem(file_path, modo)
+    return entropia(conteudo)
+
+
+            
+def draw_histogram_matplotlib(frequencias, titulo, output_path="ex1Results"):
+    hist = [frequencias.get(i, 0) for i in range(256)]
+
+    plt.figure(figsize=(12, 6))
+    plt.bar(range(256), hist, color='skyblue', edgecolor='black', width=1.0)
+    plt.xlabel('Intensidade do pixel (0-255)')
+    plt.ylabel('Frequência Absoluta')
+    plt.title(titulo)
+
+    plt.xticks(range(0, 256, 16))
+    plt.tight_layout()
+
+    dir_script = os.path.dirname(os.path.abspath(__file__))
+    pasta_saida = os.path.join(dir_script, output_path)
+
+    if not os.path.exists(pasta_saida):
+        os.makedirs(pasta_saida)
+
+    file_name = os.path.splitext(titulo)[0]
+    caminho_completo = os.path.join(pasta_saida, f"{file_name}.png")
+
+    plt.savefig(caminho_completo, dpi=150)
+    plt.show()
+    plt.close()
+
+def file_scanner(file,output_path = "ex1Results"):
     
-    # Extensões de ficheiros binários comuns
-    binarios = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.ico', '.pdf', 
-                '.zip', '.rar', '.exe', '.dll', '.bin', '.dat', '.mp3', 
-                '.mp4', '.avi', '.mov', '.wav', '.tif', '.ttf', '.woff'}
+   
+    conteudo, img = ler_pixels_imagem(file, modo="L")
     
-    if extensao in binarios:
-        # Ler como binário - cada byte é um símbolo (0-255)
-        with open(file_path, 'rb') as f:
-            bytes_data = f.read()
-            # Converter bytes para lista de inteiros (0-255)
-            conteudo = list(bytes_data)
-            return conteudo, 'binario'
-    else:
-        # Ler como texto com encoding UTF-8
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return f.read(), 'texto'
-        except UnicodeDecodeError:
-            # Se falhar UTF-8, tenta latin-1 (funciona para qualquer byte)
-            with open(file_path, 'r', encoding='latin-1') as f:
-                return f.read(), 'texto'
+
+    file_name = os.path.basename(file)
+
+    frequencias = calcular_frequencias(conteudo)
+    total = len(conteudo)
+    simbolo_max, freq_max = simbolo_mais_frequente(conteudo)
+
+
+    entropia_valor = entropia(conteudo)
+
+    print(f'\n{"="*50}')
+    print(f'FICHEIRO: {file_name})')
+    print(f'{"="*50}')
+    print(f'Total de símbolos: {total}')
+    print(f'\n>>> ENTROPIA DA FONTE <<<')
+    print(f'  H = {entropia_valor:.4f} bits/símbolo')
+    print(f'{"="*50}\n')
+    
+    
+    draw_histogram_matplotlib(frequencias, titulo=f"Histogram_{file_name}", output_path=output_path)
+    
+    return {
+        'entropia': entropia_valor,
+
+    }            
+    
+    

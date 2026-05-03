@@ -1,25 +1,34 @@
 import os
 
-from ModuloA.Exercicio2.utils import simbolo_mais_frequente, entropia, calcular_frequencias, prob_max, info_propria, max_entropia, entropia_redundancia, ler_ficheiro
 import matplotlib.pyplot as plt
-import ex2 
+import utils
+from PIL import Image
+import ex1
 
+
+
+def test_files():
+    original_files = utils.filesToTest("Test_Images")
+    cifra_files = utils.filesToTest("imagens_cifradas")
+    decifra_files = utils.filesToTest("imagens_decifradas")
     
-def filesToTest(path):
-    dir_atual = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(dir_atual, path)
-    return [os.path.join(data_dir, f) for f in os.listdir(data_dir) if os.path.isfile(os.path.join(data_dir, f))]
-
-
-    
-def main():
-    test_files = filesToTest("Test Images")
-
     try:
-        for file in test_files:
-            print(f"Processando ficheiro: {file}")
+        for original_file, cifra_file, decifra_file in zip(original_files, cifra_files, decifra_files):
+            
+            utils.file_scanner(original_file, output_path="ex2bResults/original_histogramas")
+            utils.file_scanner(cifra_file, output_path="ex2bResults/cifra_histogramas")
+            utils.file_scanner(decifra_file, output_path="ex2bResults/decifra_histogramas")
+            img_original = Image.open(original_file).convert("RGB")
+            img_decifra = Image.open(decifra_file)
+            mae = ex1.calcular_mae(img_original, img_decifra)
+            print(f"Valor de MAE entre {original_file} e {decifra_file}: {mae:.4f}")            
+            
     except Exception as e:
-        print(f"Erro ao processar ficheiro {file}: {e}")        
+        print(f"Erro ao processar ficheiros {cifra_file} e {decifra_file}: {e}")
+            
+def main():
+
+    test_files()      
         
 if __name__ == "__main__":
     main()               

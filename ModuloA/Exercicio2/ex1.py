@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import os
 import utils
 
-def draw_histogram_matplotlib(frequencias, titulo):
+def draw_histogram_matplotlib(frequencias, titulo, output_path="ex1Results"):
     """
     Gera histograma usando matplotlib - salva como imagem.
     Mostra: símbolo, frequência, probabilidade e informação própria.
@@ -43,7 +43,7 @@ def draw_histogram_matplotlib(frequencias, titulo):
 
     
     dir_script = os.path.dirname(os.path.abspath(__file__))
-    pasta_saida = os.path.join(dir_script, "ex1Results")
+    pasta_saida = os.path.join(dir_script, output_path)
     
     file_name = os.path.splitext(titulo)[0]
 
@@ -51,7 +51,7 @@ def draw_histogram_matplotlib(frequencias, titulo):
     plt.savefig(caminho_completo, dpi=150)
     plt.show()
 
-def file_scanner(file):
+def file_scanner(file,output_path = "ex1Results"):
     
     conteudo, modo = utils.ler_ficheiro(file)
 
@@ -110,7 +110,7 @@ def file_scanner(file):
         
         print(f'{simbolo_fmt:<12} {freq:<10} {prob:<10.4f} {info:<10.4f} {contrib:.4f}')
     
-    draw_histogram_matplotlib(frequencias, titulo=f"Histogram_{file_name}")
+    draw_histogram_matplotlib(frequencias, titulo=f"Histogram_{file_name}", output_path=output_path)
     
     return {
         'ficheiro': file_name,
