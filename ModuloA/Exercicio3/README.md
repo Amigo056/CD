@@ -1,10 +1,5 @@
 # Exercício 1 — Codificação e Compressão de Dados com Perda (Lossy)
 
-**Unidade Curricular:** Codificação de Dados (CD) — LEIC, ISEL  
-**Módulo:** A — Parte 3  
-**Data:** Abril de 2026
-
----
 
 ## 1. Objetivo
 
@@ -155,12 +150,6 @@ Para aplicações práticas, recomenda-se o uso de qualidades entre **75 e 90**,
 
 
 # Exercício 2 — Cifra e Decifra de Imagens com a Cifra de Vernam
-
-**Unidade Curricular:** Codificação de Dados (CD) — LEIC, ISEL  
-**Módulo:** A — Parte 3  
-**Data:** Abril de 2026
-
----
 
 ## 1. Objetivo
 

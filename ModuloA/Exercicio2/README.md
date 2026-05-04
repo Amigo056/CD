@@ -72,7 +72,43 @@ Os resultados confirmam que a entropia de Shannon é uma medida robusta da "alea
 ### Conclusão
 A análise demonstrou que a entropia efetivamente quantifica a compressibilidade teórica de diferentes tipos de dados. Ficheiros de texto e código-fonte, devido às regularidades linguísticas e sintáticas, apresentam significativa redundância (1.2-2.2 bits/símbolo), enquanto ficheiros binários comprimidos aproximam-se do limite de entropia máxima (8 bits/byte), indicando que não possuem padrões exploráveis para compressão adicional sem perdas.
 
+### Anexos
+
+#### Código-fonte
+
+- Script de análise de entropia: [`ex1.py`](./ex1.py)
+- Funções utilitárias: [`utils.py`](./utils.py)
+
+
+#### Resultados
+
+- Histogramas:
+  - [`Histogram_a.png`](./ex1Results/Histogram_a.png)
+  - [`Histogram_alice29.png`](./ex1Results/Histogram_alice29.png)
+  - [`Histogram_Apelidos.png`](./ex1Results/Histogram_Apelidos.png)
+  - [`Histogram_arrays.png`](./ex1Results/Histogram_arrays.png)
+  - [`Histogram_barries.png`](./ex1Results/Histogram_barries.png)
+  - [`Histogram_bird.png`](./ex1Results/Histogram_bird.png)
+  - [`Histogram_cartoes.png`](./ex1Results/Histogram_cartoes.png)
+  - [`Histogram_cp.png`](./ex1Results/Histogram_cp.png)
+  - [`Histogram_fibonacci.png`](./ex1Results/Histogram_fibonacci.png)
+  - [`Histogram_lena.png`](./ex1Results/Histogram_lena.png)
+  - [`Histogram_Localidades.png`](./ex1Results/Histogram_Localidades.png)
+  - [`Histogram_maximumSubarray.png`](./ex1Results/Histogram_maximumSubarray.png)
+  - [`Histogram_Nomes.png`](./ex1Results/Histogram_Nomes.png)
+  - [`Histogram_person.png`](./ex1Results/Histogram_person.png)
+  - [`Histogram_Profissoes.png`](./ex1Results/Histogram_Profissoes.png)
+  - [`Histogram_progc.png`](./ex1Results/Histogram_progc.png)
+  - [`Histogram_view.png`](./ex1Results/Histogram_view.png)
+
+
+---
+
 ## 2. Implementação de Fontes de Símbolos
+
+### Introdução teorica
+
+Uma fonte de símbolos pode ser definida por um alfabeto \(X = \{x_1, x_2, ..., x_M\}\) e por uma função massa de probabilidade associada a cada símbolo. A geração de sequências aleatórias deve respeitar essa distribuição.
 
 ### a) Fonte de Símbolos Genérica
 
@@ -85,6 +121,7 @@ A validação inclui:
 
 Os resultados demonstram o funcionamento correto da fonte através da geração de sequências que respeitam as probabilidades teóricas especificadas.
 
+---
 ### b) Jogos de Sorte
 
 #### i) Jogo "Dois Dados"
@@ -108,6 +145,7 @@ No ficheiro 3 (lottery_jogo3.txt), a aplicação gerou outro sorteio, do qual re
 
 Os resultados obtidos mostram que o comportamento da aplicação é aleatório e compatível com o objetivo pretendido, isto é, a geração automática de apostas e de sorteios semanais. Além disso, os registos produzidos pela aplicação mostram que cada aposta foi armazenada em ficheiro com os respetivos números, estrelas e resultado final, surgindo em vários casos a indicação “Not a winner”, o que confirma que a verificação dos prémios foi também considerada na simulação.
 
+---
 ### c) Geração de Conteúdos
 
 #### i) Geração de Passwords
@@ -122,6 +160,7 @@ No ficheiro 3 (passwords3.txt) , foram geradas 5000 passwords, os resultados con
 
 Os resultados mostram que a funcionalidade de geração de passwords está correta, uma vez que produz múltiplas passwords, em grande quantidade, com estrutura compatível com os critérios definidos. A diferença entre passwords geradas em ficheiros distintos sugere ainda um comportamento aleatório adequado.
 
+---
 
 #### ii) Preenchimento da Tabela Pessoas
 
@@ -133,6 +172,59 @@ No ficheiro 3 (cartoes3.txt), foram gerados 5000 cartões, confirmando-se que a 
 
 Os resultados mostram que a funcionalidade de geração de cartões está correta, uma vez que produz múltiplos registos, em grande quantidade, com estrutura compatível com os critérios definidos. A diferença entre os cartões gerados nos vários ficheiros sugere ainda um comportamento adequado na criação automática dos atributos Nome, Apelido, Profissão e Localidade.
 
+---
+### Conclusão
+
+O exercício permitiu implementar diferentes fontes de símbolos artificiais e aplicar esses mecanismos a cenários práticos de simulação e geração de conteúdos. Os resultados demonstraram a utilidade da modelação probabilística na produção automática de dados com comportamento coerente e reprodutível.
+
+### Anexos
+
+### Código-fonte
+
+- Script de geração de fontes de símbolos: [`ex2alineaA.py`](./ex2alineaA.py)
+- Script de jogos (dados e loteria): [`ex2alineaBii.py`](./ex2alineaBii.py)
+- Script de geração de passwords: [`ex2alineaCi.py`](./ex2alineaCi.py)
+- Script de geração de cartões: [`ex2alineaCii.py`](./ex2alineaCii.py)
+- Script de compressão com 7-Zip: [`ex3.py`](./ex3.py)
+- Funções utilitárias: [`utils.py`](./utils.py)
+
+### Ficheiros de Dados
+
+- Apelidos: [`data/Apelidos.txt`](./data/Apelidos.txt)
+- Nomes: [`data/Nomes.txt`](./data/Nomes.txt)
+- Profissões: [`data/Profissoes.txt`](./data/Profissoes.txt)
+- Localidades: [`data/Localidades.txt`](./data/Localidades.txt)
+- Imagens de teste: [`data/`](./data/)
+
+### Resultados dos Jogos
+
+#### Jogo "Dois Dados"
+
+- Jogo 1 (10 jogadas): [`ex2Results/jogo_dado1.txt`](./ex2Results/jogo_dado1.txt)
+- Jogo 2 (20 jogadas): [`ex2Results/jogo_dado2.txt`](./ex2Results/jogo_dado2.txt)
+- Jogo 3 (15 jogadas): [`ex2Results/jogo_dado3.txt`](./ex2Results/jogo_dado3.txt)
+
+#### Jogo "Euro Milhões"
+
+- Simulação 1: [`ex2Results/lottery_jogo.txt`](./ex2Results/lottery_jogo.txt)
+- Simulação 2: [`ex2Results/lottery_jogo2.txt`](./ex2Results/lottery_jogo2.txt)
+- Simulação 3: [`ex2Results/lottery_jogo3.txt`](./ex2Results/lottery_jogo3.txt)
+
+### Geração de Conteúdos
+
+#### Passwords
+
+- Passwords (1000): [`ex2Results/passwords.txt`](./ex2Results/passwords.txt)
+- Passwords (2500): [`ex2Results/passwords2.txt`](./ex2Results/passwords2.txt)
+- Passwords (5000): [`ex2Results/passwords3.txt`](./ex2Results/passwords3.txt)
+
+#### Cartões (Tabela Pessoas)
+
+- Cartões (1000): [`ex2Results/cartoes.txt`](./ex2Results/cartoes.txt)
+- Cartões (2500): [`ex2Results/cartoes2.txt`](./ex2Results/cartoes2.txt)
+- Cartões (5000): [`ex2Results/cartoes3.txt`](./ex2Results/cartoes3.txt)
+
+---
 ## 3. Codificação e Compressão de Dados sem Perda
 
 ### Introdução
@@ -142,7 +234,6 @@ Este exercício tem como objetivo analisar a relação entre a entropia de fiche
 
 ### a) Análise de Compressão com 7-Zip
 
-#### Metodologia
 Implementou-se uma função `compress_descompress()` que, para cada ficheiro de entrada:
 1. Calcula a entropia através da função $H(X) = -\sum p(x_i)\log_2(p(x_i))$
 2. Comprime o ficheiro utilizando 7-Zip (nível de compressão mx=5)
@@ -244,3 +335,42 @@ A experiência validou experimentalmente os limites teóricos da compressão sem
 3. Ficheiros já comprimidos ou aleatórios (alta entropia) não beneficiam de compressão adicional
 4. O overhead dos formatos de arquivo torna a compressão impraticável para ficheiros muito pequenos (&lt; 200 bytes)
 5. A estrutura dos dados (repetitividade) pode permitir compressão melhor do que o esperado pela entropia isolada, como observado nos ficheiros SQL gerados no Exercício 2.
+
+---
+
+### Anexos
+
+#### Código-fonte
+
+- Script de compressão com 7-Zip: [`ex3.py`](./ex3.py)
+- Funções utilitárias: [`utils.py`](./utils.py)
+
+#### Ficheiros Comprimidos (7z)
+
+- [`ex3Results/a.txt.7z`](./ex3Results/a.txt.7z)
+- [`ex3Results/alice29.txt.7z`](./ex3Results/alice29.txt.7z)
+- [`ex3Results/Apelidos.txt.7z`](./ex3Results/Apelidos.txt.7z)
+- [`ex3Results/arrays.kt.7z`](./ex3Results/arrays.kt.7z)
+- [`ex3Results/barries.jpg.7z`](./ex3Results/barries.jpg.7z)
+- [`ex3Results/barries.tif.7z`](./ex3Results/barries.tif.7z)
+- [`ex3Results/bird.gif.7z`](./ex3Results/bird.gif.7z)
+- [`ex3Results/cartoes.txt.7z`](./ex3Results/cartoes.txt.7z)
+- [`ex3Results/cartoes2.txt.7z`](./ex3Results/cartoes2.txt.7z)
+- [`ex3Results/cp.htm.7z`](./ex3Results/cp.htm.7z)
+- [`ex3Results/ex2alineaA_Output.txt.7z`](./ex3Results/ex2alineaA_Output.txt.7z)
+- [`ex3Results/fibonacci.kt.7z`](./ex3Results/fibonacci.kt.7z)
+- [`ex3Results/jogo_dado1.txt.7z`](./ex3Results/jogo_dado1.txt.7z)
+- [`ex3Results/jogo_dado2.txt.7z`](./ex3Results/jogo_dado2.txt.7z)
+- [`ex3Results/jogo_dado3.txt.7z`](./ex3Results/jogo_dado3.txt.7z)
+- [`ex3Results/lena.bmp.7z`](./ex3Results/lena.bmp.7z)
+- [`ex3Results/Localidades.txt.7z`](./ex3Results/Localidades.txt.7z)
+- [`ex3Results/maximumSubarray.kt.7z`](./ex3Results/maximumSubarray.kt.7z)
+- [`ex3Results/Nomes.txt.7z`](./ex3Results/Nomes.txt.7z)
+- [`ex3Results/person.java.7z`](./ex3Results/person.java.7z)
+- [`ex3Results/Profissoes.txt.7z`](./ex3Results/Profissoes.txt.7z)
+- [`ex3Results/progc.c.7z`](./ex3Results/progc.c.7z)
+- [`ex3Results/view.kt.7z`](./ex3Results/view.kt.7z)
+
+#### Gráficos e Resultados
+
+- Gráfico Entropia vs. Compressão: [`ex3Results/entropia_vs_compressao.png`](./ex3Results/entropia_vs_compressao.png)
