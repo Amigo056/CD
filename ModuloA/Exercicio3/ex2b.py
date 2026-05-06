@@ -1,6 +1,3 @@
-import os
-
-import matplotlib.pyplot as plt
 import utils
 from PIL import Image
 import ex1

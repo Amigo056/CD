@@ -60,9 +60,8 @@ def processar_imagem(caminho_png, qualidades, pasta_saida):
     nome_base = os.path.splitext(os.path.basename(caminho_png))[0]
     img_original = Image.open(caminho_png)
 
-    # Garantir que está em RGB (JPEG não suporta transparência)
-    if img_original.mode in ('RGBA', 'P'):
-        img_original = img_original.convert('RGB')
+    # Garantir que está em RGB
+    img_original = img_original.convert('RGB')
 
     tamanho_original = os.path.getsize(caminho_png)
 
@@ -85,7 +84,7 @@ def processar_imagem(caminho_png, qualidades, pasta_saida):
         caminho_jpeg = os.path.join(pasta_saida, f"{nome_base}_q{q}.jpg")
         img_original.save(caminho_jpeg, "JPEG", quality=q)
 
-        # Reabrir para calcular MAE (garantir comparação justa)
+        # Reabrir para calcular MAE
         img_jpeg = Image.open(caminho_jpeg)
 
         tamanho_jpeg = os.path.getsize(caminho_jpeg)
