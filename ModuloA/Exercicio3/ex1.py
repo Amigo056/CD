@@ -36,9 +36,9 @@ def calcular_mae(img_original, img_comprimida):
     As imagens devem ter as mesmas dimensões.
     """
     # Converter para arrays numpy (valores 0-255)
-    arr1 = np.array(img_original).astype(np.float64)
-    arr2 = np.array(img_comprimida).astype(np.float64)
-
+    arr1 = np.array(img_original)
+    arr2 = np.array(img_comprimida)
+    
     # Se forem RGB, calcular MAE sobre todos os canais
     mae = np.mean(np.abs(arr1 - arr2))
     return mae
@@ -168,11 +168,12 @@ def criar_mosaico_visual(nome_imagem, img_original, resultados, pasta_saida, max
 # =============================================================================
 
 def main():
+    image = "lena3.tif"
     # Procurar todas as imagens PNG na pasta de entrada
     ficheiros_png = sorted([
         os.path.join(PASTA_ENTRADA, f) 
         for f in os.listdir(PASTA_ENTRADA) 
-        if f.lower().endswith('.png')
+       
     ])
 
     if not ficheiros_png:
