@@ -49,22 +49,38 @@ def calculate_ser(original_file, corrupted_file):
 
 
 def main():
-    origem = Path("ModuloB/TestFiles/alice29.txt")
-    corrompido = Path("ModuloB/Part1/SingleBitErrorResults/alice29.txt")
+    origem_texto = Path("ModuloB/TestFiles/alice29.txt")
+    corrompido_texto = Path("ModuloB/Part1/SingleBitErrorResults/alice29.txt")
+    origem_imagem= Path("ModuloB/TestImages/bird.png")
+    corrompido_imagem = Path("ModuloB/Part1/SingleBitErrorImages/bird.png")
 
-    single_bit_error(origem, corrompido, 0.01)
+    P = 0.01
+    single_bit_error(origem_texto, corrompido_texto, P)
+    single_bit_error(origem_imagem, corrompido_imagem, P)
 
-    if origem.exists() and corrompido.exists():
+    if origem_texto.exists() and corrompido_texto.exists():
 
-        ber_value = calculate_ber(origem, corrompido)
-        ser_value = calculate_ser(origem, corrompido)
+        ber_value = calculate_ber(origem_texto, corrompido_texto)
+        ser_value = calculate_ser(origem_texto, corrompido_texto)
 
-        print(f"Resultados para o ficheiro {origem.name}:")
+        print(f"Resultados para o ficheiro {origem_texto.name}:")
         print(f"-> BER (Bit Error Rate):    {ber_value:.6f}")
         print(f"-> SER (Symbol Error Rate): {ser_value:.6f}")
 
     else:
-        print("Os ficheiros de teste não foram encontrados.")
+        print("Os ficheiros de texto de teste não foram encontrados.")
+
+    if origem_imagem.exists() and corrompido_imagem.exists():
+
+        ber_value = calculate_ber(origem_imagem, corrompido_imagem)
+        ser_value = calculate_ser(origem_imagem, corrompido_imagem)
+
+        print(f"Resultados para o ficheiro {origem_imagem.name}:")
+        print(f"-> BER (Bit Error Rate):    {ber_value:.6f}")
+        print(f"-> SER (Symbol Error Rate): {ser_value:.6f}")
+
+    else:
+        print("Os ficheiros de imagem de teste não foram encontrados.")
 
 if __name__ == "__main__":
     main()
