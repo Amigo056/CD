@@ -1,5 +1,6 @@
 import random
 from pathlib import Path
+from metrics import count_bit_errors
 
 
 def burst_bit_error(input_file, output_file, B):
@@ -21,16 +22,6 @@ def burst_bit_error(input_file, output_file, B):
 
     # Devolve a posicao inicial para ser possivel confirmar o teste.
     return start
-
-
-def count_bit_errors(file1, file2):
-    # Le os dois ficheiros em binario para comparar byte a byte.
-    with open(file1, "rb") as f1, open(file2, "rb") as f2:
-        data1 = f1.read()
-        data2 = f2.read()
-
-    # XOR mostra os bits diferentes; bit_count conta quantos bits mudaram.
-    return sum((b1 ^ b2).bit_count() for b1, b2 in zip(data1, data2))
 
 
 def main():
