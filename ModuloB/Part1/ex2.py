@@ -5,7 +5,11 @@
 #   (iii) codigo de repeticao (5,1)
 
 from pathlib import Path
+import sys
+
+sys.path.append(str(Path(__file__).resolve().parent))
 from ex1a import single_bit_error
+from ex1b import count_bit_errors
 
 
 def bytes_to_bits(data):
@@ -83,6 +87,87 @@ def simulate_with_repetition(input_file, encoded_file, channel_file, output_file
     write_bits(output_file, decoded_bits)
 
 
+def create_table_row(input_file, output_file, p, configuration,
+                     channel_errors, final_errors, transmitted_bits, information_bits):
+    # Cria uma linha com os valores pedidos na alinea b.
+    return [
+        input_file.name,
+        str(p),
+        configuration,
+        f"{channel_errors / transmitted_bits:.6f}",
+        f"{final_errors / information_bits:.6f}",
+        str(transmitted_bits),
+        str(information_bits),
+        input_file.name,
+        output_file.name,
+    ]
+
+
+def simulate_configuration(input_file, p, results_dir, configuration, repetition):
+    # Simula uma das tres configuracoes e devolve a linha da tabela.
+    information_bits = input_file.stat().st_size * 8
+    p_name = str(p).replace(".", "_")
+
+    if repetition is None:
+        output_file = results_dir / f"{input_file.stem}_p{p_name}_sem_codigo{input_file.suffix}"
+        simulate_without_code(input_file, output_file, p)
+
+        errors = count_bit_errors(input_file, output_file)
+        transmitted_bits = information_bits
+        channel_errors = errors
+        final_errors = errors
+    else:
+        prefix = f"rep{repetition}"
+        encoded_file = results_dir / f"{input_file.stem}_p{p_name}_{prefix}_codificado.bin"
+        channel_file = results_dir / f"{input_file.stem}_p{p_name}_{prefix}_canal.bin"
+        output_file = results_dir / f"{input_file.stem}_p{p_name}_{prefix}_saida{input_file.suffix}"
+
+        simulate_with_repetition(input_file, encoded_file, channel_file, output_file, p, repetition)
+
+        transmitted_bits = information_bits * repetition
+        channel_errors = count_bit_errors(encoded_file, channel_file)
+        final_errors = count_bit_errors(input_file, output_file)
+
+    row = create_table_row(
+        input_file,
+        output_file,
+        p,
+        configuration,
+        channel_errors,
+        final_errors,
+        transmitted_bits,
+        information_bits,
+    )
+
+    return row, output_file
+
+
+def print_and_save_table(rows, table_file):
+    headers = [
+        "Ficheiro",
+        "p",
+        "Configuracao",
+        "BER canal",
+        "BER apos correcao",
+        "Bits transmitidos",
+        "Bits informacao",
+        "Entrada",
+        "Saida",
+    ]
+
+    table = []
+    table.append("| " + " | ".join(headers) + " |")
+    table.append("| " + " | ".join(["---"] * len(headers)) + " |")
+    for row in rows:
+        table.append("| " + " | ".join(row) + " |")
+
+    text = "\n".join(table)
+    print(text)
+
+    with open(table_file, "w", encoding="utf-8") as f:
+        f.write(text)
+
+
 def main():
     # Valores escolhidos para testar desde erro baixo ate erro elevado.
     probabilities = [0.001, 0.01, 0.05, 0.1]
@@ -101,33 +186,33 @@ def main():
     results_dir = base_dir / "Ex2Results"
     results_dir.mkdir(exist_ok=True)
 
+    configurations = [
+        ("Sem codigo", None),
+        ("Repeticao (3,1)", 3),
+        ("Repeticao (5,1)", 5),
+    ]
+
+    table_rows = []
+
     # Para cada ficheiro e para cada p, testa as tres configuracoes pedidas.
     for input_file in input_files:
         for p in probabilities:
-            p_name = str(p).replace(".", "_")
-
-            # (i) Sem codigo de controlo de erros.
-            no_code_output = results_dir / f"{input_file.stem}_p{p_name}_sem_codigo{input_file.suffix}"
-            simulate_without_code(input_file, no_code_output, p)
-
-            # (ii) Codigo de repeticao (3,1).
-            rep3_encoded = results_dir / f"{input_file.stem}_p{p_name}_rep3_codificado.bin"
-            rep3_channel = results_dir / f"{input_file.stem}_p{p_name}_rep3_canal.bin"
-            rep3_output = results_dir / f"{input_file.stem}_p{p_name}_rep3_saida{input_file.suffix}"
-            simulate_with_repetition(input_file, rep3_encoded, rep3_channel, rep3_output, p, 3)
-
-            # (iii) Codigo de repeticao (5,1).
-            rep5_encoded = results_dir / f"{input_file.stem}_p{p_name}_rep5_codificado.bin"
-            rep5_channel = results_dir / f"{input_file.stem}_p{p_name}_rep5_canal.bin"
-            rep5_output = results_dir / f"{input_file.stem}_p{p_name}_rep5_saida{input_file.suffix}"
-            simulate_with_repetition(input_file, rep5_encoded, rep5_channel, rep5_output, p, 5)
-
-            # Mostra no terminal quais os ficheiros criados.
             print("Ficheiro:", input_file.name, "| p =", p)
-            print("  sem codigo ->", no_code_output.name)
-            print("  repeticao (3,1) ->", rep3_output.name)
-            print("  repeticao (5,1) ->", rep5_output.name)
+
+            for configuration, repetition in configurations:
+                row, output_file = simulate_configuration(
+                    input_file,
+                    p,
+                    results_dir,
+                    configuration,
+                    repetition,
+                )
+                table_rows.append(row)
+                print(" ", configuration, "->", output_file.name)
+
             print()
+
+    print_and_save_table(table_rows, results_dir / "tabela_ex2b.md")
 
 
 if __name__ == "__main__":
