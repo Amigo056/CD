@@ -29,28 +29,39 @@ def single_bit_error(input_file, output_file, p, random_seed = False):
     return
 
 def main():
-    # Dimensao da rajada usada em todos os testes.
-    P = 0,1
+    P = 0.01
 
-    # Testa a funcao nos ficheiros de texto/codigo.
-    input_folder = Path("ModuloB/TestFiles")
     output_folder = Path("ModuloB/Part1/SingleBitErrorResults")
-    output_folder.mkdir(exist_ok=True)
-    single_bit_error(input_folder, output_folder, P)
+    output_folder.mkdir(parents=True, exist_ok=True)
+    input_folder = Path("ModuloB/TestFiles")
+    for file_path in input_folder.glob("*"):
+        if file_path.is_file(): # Garante que processa apenas ficheiros e ignora subpastas
+            single_bit_error(file_path, output_folder / file_path.name, P)
 
-    output_folder = Path("ModuloB/Part1/SingleBitErrorResultsSeeded")
-    output_folder.mkdir(exist_ok=True)
-    single_bit_error(input_folder, output_folder, P, True)
+    # Com semente
+    output_folder_seeded = Path("ModuloB/Part1/SingleBitErrorResultsSeeded")
+    output_folder_seeded.mkdir(parents=True, exist_ok=True)
+    for file_path in input_folder.glob("*"):
+        if file_path.is_file():
+            single_bit_error(file_path, output_folder_seeded / file_path.name, P, random_seed=True)
 
-    # Testa a funcao nas imagens.
-    input_folder = Path("ModuloB/TestImages")
-    output_folder = Path("ModuloB/Part1/SingleBitErrorImages")
-    output_folder.mkdir(exist_ok=True)
-    single_bit_error(input_folder, output_folder, P)
 
-    output_folder = Path("ModuloB/Part1/SingleBitErrorImagesSeeded")
-    output_folder.mkdir(exist_ok=True)
-    single_bit_error(input_folder, output_folder, P, True)
+    # ---- TESTE 2: Imagens ----
+    input_images = Path("ModuloB/TestImages")
+    
+    # Sem semente
+    output_images = Path("ModuloB/Part1/SingleBitErrorImages")
+    output_images.mkdir(parents=True, exist_ok=True)
+    for img_path in input_images.glob("*"):
+        if img_path.is_file():
+            single_bit_error(img_path, output_images / img_path.name, P)
+
+    # Com semente
+    output_images_seeded = Path("ModuloB/Part1/SingleBitErrorImagesSeeded")
+    output_images_seeded.mkdir(parents=True, exist_ok=True)
+    for img_path in input_images.glob("*"):
+        if img_path.is_file():
+            single_bit_error(img_path, output_images_seeded / img_path.name, P, random_seed=True)
 
 if __name__ == "__main__":
     main()
