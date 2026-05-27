@@ -1,28 +1,28 @@
-# Escreve a tabela em formato Markdown e tambem a mostra no terminal.
-def print_and_save_table(rows, table_file):
-    headers = [
-        "Ficheiro",
-        "p",
-        "Configuracao",
-        "BER canal",
-        "BER apos correcao",
-        "Bits transmitidos",
-        "Bits informacao",
-        "Entrada",
-        "Saida",
-    ]
+import csv
+from pathlib import Path
 
-    table = []
-    table.append("| " + " | ".join(headers) + " |")
-    table.append("| " + " | ".join(["---"] * len(headers)) + " |")
-    for row in rows:
-        table.append("| " + " | ".join(row) + " |")
+def print_and_save_csv(headers, rows, out_path, delimiter=","):
+    """
+    Grava CSV com BOM UTF-8 e newline='' para compatibilidade com Excel.
+    Default delimiter=','; use delimiter=';' para Excel PT local.
+    """
+    out_path = Path(out_path)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    text = "\n".join(table)
-    print(text)
+    # normaliza cada linha ao mesmo número de colunas dos headers
+    norm_rows = []
+    for r in rows:
+        r_list = list(r)
+        if len(r_list) < len(headers):
+            r_list.extend([''] * (len(headers) - len(r_list)))
+        elif len(r_list) > len(headers):
+            r_list = r_list[: len(headers)]
+        norm_rows.append([str(x) for x in r_list])
 
-    with open(table_file, "w", encoding="utf-8") as f:
-        f.write(text)
+    with open(out_path, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.writer(f, delimiter=delimiter, quoting=csv.QUOTE_MINIMAL)
+        writer.writerow([str(h) for h in headers])
+        writer.writerows(norm_rows)
 
 # A tabela junta BER do canal, BER depois da correcao e numero de bits.
 def create_table_row(input_file, output_file, p, configuration,

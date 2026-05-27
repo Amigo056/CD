@@ -13,7 +13,7 @@ from ex1a import single_bit_error
 from repetition_code import simulate_with_repetition
 from bit_utils import remove_file
 from metrics import calculate_final_ber, count_bit_errors
-from table_utils import print_and_save_table, create_table_row
+from table_utils import print_and_save_csv, create_table_row
 
 
 # Simulacao sem codigo de controlo de erros.
@@ -128,23 +128,13 @@ def run_ex2c(input_files, results_dir):
         else:
             summary.append(f"Repeticao ({repetition},1): nenhum valor testado obteve BER'=0 em todos os ficheiros.")
 
-    table = [
-        "| Codigo | p | Ficheiro | BER apos correcao | BER'=0 |",
-        "| --- | --- | --- | --- | --- |",
-    ]
-
-    for row in rows:
-        table.append("| " + " | ".join(row) + " |")
-
-    table.append("")
-    table.extend(summary)
-
-    text = "\n".join(table)
     print("\nResultados da alinea 2.c")
-    print(text)
+    headers = ["Codigo", "p", "Ficheiro", "BER apos correcao", "BER'=0"]
+    print_and_save_csv(headers, rows, results_dir / "tabela_ex2c.csv")
 
-    with open(results_dir / "tabela_ex2c.md", "w", encoding="utf-8") as f:
-        f.write(text)
+    print()
+    for line in summary:
+        print(line)
 
 
 # Funcao principal: define ficheiros, probabilidades e configuracoes,
@@ -193,7 +183,18 @@ def main():
 
             print()
 
-    print_and_save_table(table_rows, results_dir / "tabela_ex2.md")
+    headers = [
+        "Ficheiro",
+        "p",
+        "Configuracao",
+        "BER canal",
+        "BER apos correcao",
+        "Bits transmitidos",
+        "Bits informacao",
+        "Entrada",
+        "Saida",
+    ]
+    print_and_save_csv(headers, table_rows, results_dir / "tabela_ex2b.csv")
     run_ex2c(input_files, results_dir)
 
 
