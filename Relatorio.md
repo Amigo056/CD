@@ -19,3 +19,10 @@
 * **Documentação:** [` Secção 3 - Projeto A.3`](./ModuloA/Exercicio3/ProjetoA.3.md)
 
 * **Pasta do trabalho:**  [`Projeto A.3`](./ModuloA/Exercicio3/)
+
+## Modulo B
+
+### Projeto B
+* **Documentação:** [`Projeto B`](./ModuloB/ProjetoB.md)
+
+* **Pasta do trabalho:** [`Projeto B`](./ModuloB/)
