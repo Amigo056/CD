@@ -1,7 +1,3 @@
-# =====================================================================
-# ADICIONA ISTO ÀS TUAS FUNÇÕES NO RECEPTOR.PY
-# =====================================================================
-
 def hamming_encode_nibble(d1, d2, d3, d4):
     """Codifica 4 bits de dados em 7 bits (Hamming 7,4)"""
     p1 = d1 ^ d2 ^ d4
@@ -50,40 +46,31 @@ def hamming_decode_7bits(bloco):
     # Devolve apenas os 4 bits de dados originais [d1, d2, d3, d4]
     return bloco[0:4]
 
-def hamming_decode(dados_recebidos_bytes):
-    """Descodifica uma sequência de bytes inteira usando Hamming (7,4)"""
-    print("\n--- Executando: Descodificação Hamming (7,4) no Canal ---")
-    
-    # 1. Converter a string/bytes recebidos numa lista de bits para simular o canal
-    # (No cenário real do guião, o Pico enviaria os bits codificados, mas como 
-    # estamos a fazer pós-processamento no PC, vamos fingir que o texto recebido 
-    # foi o que passou pelo canal codificado)
-    
-    # Exemplo simples de teste: Vamos apenas demonstrar a lógica a funcionar
-    # para o primeiro caractere do teu pangrama (Letra 'T')
-    char_teste = dados_recebidos_bytes[0] if isinstance(dados_recebidos_bytes, bytes) else ord(dados_recebidos_bytes[0])
-    
-    # Separar os 8 bits do caractere em 2 nibbles (4 bits superiores, 4 inferiores)
-    n1 = (char_teste >> 4) & 0x0F
-    n2 = char_teste & 0x0F
-    
-    # Extrair os bits individuais do primeiro nibble para testar
-    d1 = (n1 >> 3) & 1
-    d2 = (n1 >> 2) & 1
-    d3 = (n1 >> 1) & 1
-    d4 = n1 & 1
-    
-    # Codificar
-    bloco_codificado = hamming_encode_nibble(d1, d2, d3, d4)
-    print(f"Bits de dados originais (4 bits): {[d1,d2,d3,d4]}")
-    print(f"Bloco transmitido com Paridade (7 bits): {bloco_codificado}")
-    
-    # --- SIMULAÇÃO DE INJEÇÃO DE ERRO NO CANAL ---
-    # Vamos forçar um erro propositado no bit d2 (índice 1) para ver a magia acontecer
-    bloco_codificado[1] ^= 1 
-    print(f"Bloco após sofrer ruído no canal:        {bloco_codificado}")
-    # ---------------------------------------------
-    
-    # Correr o descodificador que criámos lá em cima
-    dados_corrigidos = hamming_decode_7bits(bloco_codificado)
-    print(f"Bits recuperados após o Hamming:         {dados_corrigidos}")
+def byte_to_bits(valor):
+    return [(valor >> i) & 1 for i in range(7, -1, -1)]
+
+def hamming_decode_file(nome_ficheiro):
+    with open(nome_ficheiro, "rb") as f:
+        dados = f.read()
+
+    total_blocos = 0
+    erros_detetados = 0
+
+    for byte in dados:
+        bits = byte_to_bits(byte)
+
+        nibble1 = bits[:4]
+        nibble2 = bits[4:]
+
+        bloco1 = hamming_encode_nibble(*nibble1)
+        bloco2 = hamming_encode_nibble(*nibble2)
+
+        _, erro1 = hamming_decode_7bits(bloco1)
+        _, erro2 = hamming_decode_7bits(bloco2)
+
+        total_blocos += 2
+        erros_detetados += int(erro1) + int(erro2)
+
+    print(f"[HAMMING] Ficheiro analisado: {nome_ficheiro}")
+    print(f"[HAMMING] Total de blocos: {total_blocos}")
+    print(f"[HAMMING] Erros detetados/corrigidos: {erros_detetados}")
