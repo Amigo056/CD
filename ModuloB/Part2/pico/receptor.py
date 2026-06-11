@@ -45,7 +45,8 @@ try:
         print("==============================================")
         
         ficheiros_decodificar = []
-        ficheiros_decodificar.append("dados_recebidos.txt") 
+        if(USAR_HAMMING):
+            ficheiros_decodificar.append("dados_recebidos.txt")
 
         if USE_SINGLE_BIT_ERROR:
             single_bit_error(
