@@ -1,3 +1,6 @@
+from single_bit_error import single_bit_error_bits     
+from burst_errors import burst_bit_error_bits
+
 def nibble_para_bits(n):
     return [
         (n >> 3) & 1,
@@ -56,8 +59,8 @@ def hamming_decode_7bits(bloco):
             erro_corrigido = True
             bloco[idx] ^= 1  # Faz o 'flip' do bit para o corrigir!
             print(f"  [HAMMING] Bit corrigido com sucesso!")
-    else:
-        print("  [HAMMING] Bloco verificado. Sem erros.")
+  
+       
 
     # Devolve apenas os 4 bits de dados originais [d1, d2, d3, d4]
     return bloco[0:4], erro_detetado, erro_corrigido
@@ -95,16 +98,21 @@ def codificar_texto_hamming(texto):
 
 def descodificar_texto_hamming(bits_data):
     """
-    Recebe uma sequência codificada em Hamming (bytearray, bytes ou string),
+    Recebe uma sequência codificada em Hamming (str, bytes ou bytearray),
     corrige erros simples e reconstrói o texto original.
     """
-    if isinstance(bits_data, str):
-        bits_string = bits_data.strip()
+    if isinstance(bits_data, (bytes, bytearray)):
+        bits_string = bytes(bits_data).decode("utf-8", errors="ignore")
     else:
-        bits_string = bytes(bits_data).decode("utf-8").strip()
+        bits_string = str(bits_data)
+
+    bits_string = "".join(c for c in bits_string if c in ("0", "1"))
 
     if len(bits_string) % 14 != 0:
-        raise ValueError("A sequência de bits deve ter comprimento múltiplo de 14.")
+        raise ValueError(
+            f"A sequência de bits deve ter comprimento múltiplo de 14. "
+            f"Comprimento atual: {len(bits_string)}"
+        )
 
     lista_bits = [int(b) for b in bits_string]
 
@@ -129,7 +137,6 @@ def descodificar_texto_hamming(bits_data):
         bytes_resultado.append(byte)
 
     texto = bytes_resultado.decode("utf-8", errors="replace")
-
     return texto, erros_detetados, erros_corrigidos
 
 def hamming_decode_file(nome_ficheiro):
@@ -145,20 +152,49 @@ def hamming_decode_file(nome_ficheiro):
     return texto_descodificado, erros_detetados, erros_corrigidos
 
 def main():
-    texto_original = "The quick brown fox jumps over the lazy dog!"
+    texto_original = "The quick brown fox jumps over the lazy dog"
     print(f"Texto original: {texto_original}")
 
     texto_codificado = codificar_texto_hamming(texto_original)
-    print(f"Texto codificado (bits): {texto_codificado.decode('utf-8')}")
+    bits_codificados = texto_codificado.decode("utf-8").strip()
+    print(f"\nTexto codificado (bits): {bits_codificados}")
+    print(f"Número de bits codificados: {len(bits_codificados)}")
 
-    # Simular um erro introduzindo um bit errado
-    if len(texto_codificado) > 10:
-        texto_codificado[10] ^= 1  # Inverte um bit para simular erro
-
+    # -------------------------------------------------
+    # 1) Teste sem erros
+    # -------------------------------------------------
+    print("\n===== TESTE SEM ERROS =====")
     texto_descodificado, erros_detetados, erros_corrigidos = descodificar_texto_hamming(texto_codificado)
     print(f"Texto descodificado: {texto_descodificado}")
-    print(f"Erros detetados: {erros_detetados}, Erros corrigidos: {erros_corrigidos}")
-    
-    
+    print(f"Erros detetados: {erros_detetados}")
+    print(f"Erros corrigidos: {erros_corrigidos}")
+
+    # -------------------------------------------------
+    # 2) Teste com erro aleatório bit a bit
+    # -------------------------------------------------
+    print("\n===== TESTE SINGLE BIT ERROR =====")
+    texto_codificado_com_erro = single_bit_error_bits(texto_codificado, p=0.001, random_seed=True)
+    bits_com_erro = texto_codificado_com_erro
+    print(f"Bits com erro aleatório: {bits_com_erro}")
+
+    texto_descodificado, erros_detetados, erros_corrigidos = descodificar_texto_hamming(texto_codificado_com_erro)
+    print(f"Texto descodificado: {texto_descodificado}")
+    print(f"Erros detetados: {erros_detetados}")
+    print(f"Erros corrigidos: {erros_corrigidos}")
+
+    # -------------------------------------------------
+    # 3) Teste com erro em rajada
+    # -------------------------------------------------
+    print("\n===== TESTE BURST BIT ERROR =====")
+    texto_codificado_rajada = burst_bit_error_bits(texto_codificado, B=5)
+    bits_rajada = texto_codificado_rajada
+    print(f"Bits com rajada: {bits_rajada}")
+
+    texto_descodificado, erros_detetados, erros_corrigidos = descodificar_texto_hamming(texto_codificado_rajada)
+    print(f"Texto descodificado: {texto_descodificado}")
+    print(f"Erros detetados: {erros_detetados}")
+    print(f"Erros corrigidos: {erros_corrigidos}")
+
+
 if __name__ == "__main__":
-    main()  
+    main()

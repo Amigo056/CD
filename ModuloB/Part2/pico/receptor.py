@@ -1,9 +1,9 @@
 import serial
 
 
-from single_bit_error import single_bit_error       
-from burst_errors import burst_bit_error           
-from hamming import hamming_decode_file             
+from single_bit_error import single_bit_error_bits       
+from burst_errors import burst_bit_error_bits        
+from hamming import descodificar_texto_hamming             
 
 # Controlo do guião (parâmetro de entrada)
 USAR_HAMMING = True
@@ -29,47 +29,40 @@ except Exception as e:
 try:
     # Ler a linha enviada pelo Pico 2 W
     dados_bytes = ser.readline()
-    
+   
     if dados_bytes:
         texto_recebido = dados_bytes.decode('utf-8').strip()
         print(f"\n[RECEBIDO] Texto puro do Pico: \"{texto_recebido}\"")
         
        
+        
+        if not USAR_HAMMING:
+            with open("dados_recebidos.txt", "w", encoding="utf-8") as f:
+                f.write(texto_recebido + "\n")
+            print("[FICHEIRO] Dados guardados com sucesso em 'dados_recebidos.txt'.")
+          
+        else:        
+            dados_ba = bytearray(texto_recebido, "utf-8")
+            
+        
+            if USE_SINGLE_BIT_ERROR:
+           
+                dados_ba = single_bit_error_bits(dados_ba, p=PROB)
+                print(f"Bits com erro aleatório: {dados_ba}")
+
+            if USE_BURST_BIT_ERROR:
+              
+                dados_ba = burst_bit_error_bits(dados_ba, B=BURST)
+                print(f"Bits com erro aleatório: {dados_ba}")
+           
+            texto_descodificado, erros_detetados, erros_corrigidos = descodificar_texto_hamming(dados_ba)
+            print(f"Texto descodificado: {texto_descodificado}")
+            print(f"Erros detetados: {erros_detetados}")
+            print(f"Erros corrigidos: {erros_corrigidos}")
+
         with open("dados_recebidos.txt", "w", encoding="utf-8") as f:
-            f.write(texto_recebido + "\n")
+            f.write(texto_descodificado + "\n")
         print("[FICHEIRO] Dados guardados com sucesso em 'dados_recebidos.txt'.")
-        
-
-        print("\n==============================================")
-        print("          TESTES DE ERRO PÓS-RECEÇÃO          ")
-        print("==============================================")
-        
-        ficheiros_decodificar = []
-        if(USAR_HAMMING):
-            ficheiros_decodificar.append("dados_recebidos.txt")
-
-        if USE_SINGLE_BIT_ERROR:
-            single_bit_error(
-            input_file="dados_recebidos.txt",
-            output_file="dados_com_erro_single.txt",
-            p=PROB
-            )
-            print("[OK] Gerado: dados_com_erro_single.txt")
-            ficheiros_decodificar.append("dados_com_erro_single.txt")
-
-        if USE_BURST_BIT_ERROR:
-            burst_bit_error(
-            input_file="dados_recebidos.txt",
-            output_file="dados_com_erro_burst.txt",
-            B=BURST
-            )
-            print("[OK] Gerado: dados_com_erro_burst.txt")
-            ficheiros_decodificar.append("dados_com_erro_burst.txt")
-        
-        if USAR_HAMMING:
-            print("\n[HAMMING] A analisar os ficheiros com o código de Hamming...")
-            for ficheiro in ficheiros_decodificar:
-                hamming_decode_file(ficheiro)
     else:
         print("[AVISO] Timeout! Nenhum dado recebido do Pico 2 W.")
         
