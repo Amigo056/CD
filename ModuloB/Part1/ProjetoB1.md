@@ -1,4 +1,4 @@
-Projeto B.1
+# Projeto B.1
 
 ## Exercício 1 - Simulação de erros no canal
 
